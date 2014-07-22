@@ -37,38 +37,29 @@
 	}
 
 	</style>
-	<script src="angular.js"></script>
-	<script>
-	function taskController($scope){
-		$scope.tasks = [
-			{name : 'Task - 1', isCompleted : false},
-			{name : 'Task - 2', isCompleted : true},
-			{name : 'Task - 3', isCompleted : false},
-		];
-		$scope.addTask = function(nt){
-			$scope.tasks.push({
-				name : nt,
-				isCompleted : false
-			});
-		};
-		$scope.toggleCompletion = function(task){
-			task.isCompleted = !task.isCompleted;
-		}
-	}
-	</script>
+	<script src="vendor/angular.js"></script>
+	<script src="utils/module/module.js"></script>
+	<script src="utils/factory/logger.js"></script>
+	<script src="utils/factory/Task.js"></script>
+
+	<script src="taskApp/module/module.js"></script>
+	<script src="taskApp/controller/taskController.js"></script>
 </head>
-<body ng-app >
+<body ng-app="taskApp" >
 	<h1>Task Manager</h1>
 	<div class="content" ng-controller="taskController" >
 		<label for="">Task :</label>
 		<input type="text" ng-model="newTask">
-		<input type="button" value="Add Task" ng-click="addTask(newTask)">
+		<input type="button" value="Add Task" ng-click="tasks.addTask(newTask)">
 		<input type="button" value="Remove Completed">
 		<ul>
-			<li ng-repeat="task in tasks" ng-click="toggleCompletion(task)" ng-class="{completed : task.isCompleted}">{{task.name}}</li>			
+			<li ng-repeat="task in tasks.list" ng-click="task.toggleCompletion()" ng-class="task.isCompleted ? 'completed' : 'notCompleted'">{{task}}</li>			
 		</ul>
 		<div>
-			# of Tasks : {{tasks.length}}
+			# of Tasks : {{tasks.list.length}}
+		</div>
+		<div>
+			# of Completed Tasks : {{tasks.getCompletedCount()}}
 		</div>
 	</div>
 </body>
