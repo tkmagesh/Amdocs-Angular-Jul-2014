@@ -30,21 +30,46 @@
 		border: 2px outset gray;
 		background-color: #e7e7e7;
 	}
+	.completed{
+		border : 2px inset red;
+		background-color: lightpink;
+		font-style: italic;
+	}
 
 	</style>
+	<script src="angular.js"></script>
+	<script>
+	function taskController($scope){
+		$scope.tasks = [
+			{name : 'Task - 1', isCompleted : false},
+			{name : 'Task - 2', isCompleted : true},
+			{name : 'Task - 3', isCompleted : false},
+		];
+		$scope.addTask = function(nt){
+			$scope.tasks.push({
+				name : nt,
+				isCompleted : false
+			});
+		};
+		$scope.toggleCompletion = function(task){
+			task.isCompleted = !task.isCompleted;
+		}
+	}
+	</script>
 </head>
-<body>
+<body ng-app >
 	<h1>Task Manager</h1>
-	<div class="content">
+	<div class="content" ng-controller="taskController" >
 		<label for="">Task :</label>
-		<input type="text" name="" id="">
-		<input type="button" value="Add Task">
+		<input type="text" ng-model="newTask">
+		<input type="button" value="Add Task" ng-click="addTask(newTask)">
 		<input type="button" value="Remove Completed">
 		<ul>
-			<li>Task - 1</li>
-			<li>Task - 2</li>
-			<li>Task - 3</li>
+			<li ng-repeat="task in tasks" ng-click="toggleCompletion(task)" ng-class="{completed : task.isCompleted}">{{task.name}}</li>			
 		</ul>
+		<div>
+			# of Tasks : {{tasks.length}}
+		</div>
 	</div>
 </body>
 </html>
