@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Nested Controllers</title>
+	<style>
+	.parent{
+		border: 2px solid blue;
+		background-color: lightblue;
+		padding: 10px;
+		margin : 10px;
+	}
+	.child{
+		margin : 10px;
+		border : 2px solid red;
+		background-color: lightpink;
+		padding : 10px;
+	}
+	</style>
+	<script src="angular.js"></script>
+	<script>
+	function parentController($scope){
+		$scope.emp = {
+			name : "magesh"
+		}
+	}
+	function childController($scope){
+		$scope.emp = {
+			name : "suresh"
+		}
+	}
+	</script>
+</head>
+<body ng-app ng-init="name='Suresh'">
+	<div ng-controller="parentController" class="parent">
+		<input type="text" ng-model="emp.name">
+		<div>{{emp.name}}</div>
+		<div ng-controller="childController" class="child">
+			<input type="text" ng-model="emp.name">
+			<div>{{emp.name}}</div>
+		</div>	
+	</div>
+	
+</body>
+</html>
