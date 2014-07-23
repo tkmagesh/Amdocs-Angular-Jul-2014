@@ -23,9 +23,10 @@ var tasks = [
 
 var server = http.createServer(function(req,res){
 	var urlPath = url.parse(req.url).pathname;
+	console.log(req.method, urlPath);
 	var pathName = path.join(__dirname, urlPath);
 	if (isStatic(pathName)){
-		console.log(pathName);
+		
 		if (fs.existsSync(pathName)){
 			fs.createReadStream(pathName).pipe(res);
 		} else {
@@ -33,11 +34,25 @@ var server = http.createServer(function(req,res){
 			res.end();
 		}
 	} else {
-		if (urlPath === "/tasks"){
+		if (req.method === "GET" && urlPath === "/tasks"){
 			setTimeout(function(){
 				res.write(JSON.stringify(tasks));
 				res.end();	
-			},15000);
+			},1000);
+		}
+		if (req.method === "POST" && urlPath === "/tasks"){
+			var data = '';
+			req.on('data', function(d){
+				data += d;
+			});
+			req.on('end', function(){
+				var newId = tasks.reduce(function(seed,t){ return seed > t.id ? seed : t.id;},0) + 1;
+				var task = JSON.parse(data);
+				task.id = newId;
+				tasks.push(JSON.parse(data));
+				res.write(JSON.stringify(task));
+				res.end();
+			});
 		}
 	}
 });

@@ -1,8 +1,26 @@
 angular
 	.module("taskApp")
-	.service('taskStorage', function TaskStorage($http){
+	.service('taskStorage', function TaskStorage($http, Task, $q, $window ){
+
 		this.getAll = function(){
-			return $http.get('/tasks');
+			var deferred = $q.defer();
+			$http.get('/tasks').success(function(data){
+				var result = data.map(function(t){
+					return new Task(t);
+				});
+				deferred.resolve(result);
+			});
+			return deferred.promise;
+		};
+		this.save = function(task){
+			var deferred = $q.defer();
+			$http.post('/tasks', $window.JSON.stringify(task)).success(function(data){
+				console.log(data);
+				var t = new Task(data);
+				console.log(t);
+				deferred.resolve(t);
+			});
+			return deferred.promise;	
 		}
 	});
 	/*.service('taskStorage', function TaskStorage($window, Task){
