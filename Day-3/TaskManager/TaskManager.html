@@ -12,9 +12,35 @@
 	<script src="utils/factory/Task.js"></script>
 
 	<script src="taskApp/module/module.js"></script>
+	<script>
+	angular
+		.module('taskApp')
+		.directive('configureTask', function(){
+			return function(scope,element,attr){
+				console.dir(element);
+				if (scope.hideInput){
+					element.css('display','none');
+				}
+			}
+		})
+		.directive('taskList', function(){
+			return function(scope,element,attr){
+				var listElement = angular.element("<ul>");
+				scope.tasks.list.forEach(function(t){
+					var newTaskLi = angular.element("<li>");
+					newTaskLi.text(t);
+					listElement.append(newTaskLi);
+				});
+				element.append(listElement);
+				//console.log(scope.tasks.list);
+			}
+		})
+
+	</script>
 	<script src="taskApp/service/taskStorage.js"></script>
 	<script src="taskApp/filter/limitTaskName.js"></script>
 	<script src="taskApp/controller/taskController.js"></script>
+	
 </head>
 <body ng-app="taskApp">
 	<header>
@@ -29,12 +55,13 @@
 			<input type="range" min="10" max="30" ng-init="taskNameLengthLimit = 10" ng-model="taskNameLengthLimit">
 		</div>
 		<label for="">Task :</label>
-		<input type="text" ng-model="newTask">
+		<input type="text" ng-model="newTask" configure-task>
 		<input type="button" value="Add Task" ng-click="tasks.addTask(newTask)">
-		<input type="button" value="Remove Completed">
-		<ul>
+		<input type="button" value="Remove Completed" ng-click="hideInput=true" >
+		<div task-list></div>
+		<!-- <ul>
 			<li ng-repeat="task in tasks.list | filter:searchTask" ng-click="tasks.toggle(task)" ng-class="task.isCompleted ? 'completed' : 'notCompleted'">{{task.name | limitTaskName:taskNameLengthLimit}}</li>			
-		</ul>
+		</ul> -->
 		<div>
 			# of Tasks : {{tasks.list.length}}
 		</div>

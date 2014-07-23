@@ -24,8 +24,13 @@
 
 			})
 			.controller('productsController', function($scope, $routeParams){
+				console.log("productsController");
 				console.log($routeParams);
+				$scope.info = "Information for product " + $routeParams.productCount;
 				$scope.productsCount = $routeParams.productCount;
+			})
+			.controller('productDetailsController',function($scope){
+
 			})
 			.controller('customersController',function($scope){
 				$scope.customersCount = 20;

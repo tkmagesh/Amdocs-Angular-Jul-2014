@@ -2,11 +2,13 @@ angular
 		.module('taskApp')
 		.controller('taskController',['$scope','Task','logger','taskStorage',
 			function($scope, Task, logger, taskStorage){
-				taskStorage.getAll().then(function(data){
+
+
+				/*taskStorage.getAll().then(function(data){
 					$scope.tasks.list = data;
-				});
+				});*/
 				$scope.tasks = {
-					list : [],
+					list : ['task-1', 'task-2', 'task-3'],
 					addTask : function(nt){
 						taskStorage.save(new Task({name : nt})).then(function(task){
 							console.log(this);
