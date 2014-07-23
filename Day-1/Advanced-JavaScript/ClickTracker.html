@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Click Tracker</title>
 	<script>
-	(function(){
+	(function(window,document){
 		var count = 0;
 		function onBtnTrackClick(){
 			++count;
@@ -14,7 +14,7 @@
 			document.getElementById("btnTrack").addEventListener("click", onBtnTrackClick);
 		}
 		window.addEventListener("DOMContentLoaded", init);
-	})();
+	})(window,document);
 	
 	</script>
 </head>

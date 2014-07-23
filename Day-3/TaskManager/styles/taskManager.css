@@ -1,0 +1,31 @@
+header{
+		border-top: 2px solid blue;
+		border-bottom: 2px solid blue;
+		background-color: lightblue;
+		padding: 10px;
+		margin-top: 0px;
+		margin-bottom: 10px;
+	}
+	body {
+		margin : 0px;
+		padding : 0px;
+	}
+	.content{
+		margin: 10px;
+	}
+	ul{
+		width: 400px;
+		padding-left: 0px;
+	}
+	li{
+		list-style: none;
+		padding: 5px;
+		margin: 5px;
+		border: 2px outset gray;
+		background-color: #e7e7e7;
+	}
+	.completed{
+		border : 2px inset red;
+		background-color: lightpink;
+		font-style: italic;
+	}
